@@ -13,10 +13,12 @@ class MongoDatabase{
 
     async connect(){
         try{
-            await mongoose.connect(this._uri, this._options);
+            console.log("URI " + process.env.MONGO_URI)
+            await mongoose.connect(process.env.MONGO_URI, this._options);
             console.log("CONECTADO AO MONGODB");
         }catch(err){
             console.log("ERRO AO CONECTAR AO MONGODB" + err);
+            throw err;
         }
     }
 }

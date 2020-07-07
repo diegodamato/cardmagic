@@ -8,7 +8,7 @@
     "dev": "concurrently 'npm run build:watch' 'npm run server:watch'",
     "server": "node dist/server.js",
     "server:watch": "nodemon dist/server.js",
-    "build": "ts",
+    "build": "tsc",
     "build:watch": "tsc -w"
   },
   "repository": {

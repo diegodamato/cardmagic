@@ -18,8 +18,8 @@ class MagicCardCtrl {
 
         try {
             this._listMagicCard = await this._magicService.getMagicCard(name);
-            await this._magicCardRepository.saveMagicCard(this._listMagicCard);
-            res.status(201).json({message: "Cadastrado com sucesso"})
+            const result = await this._magicCardRepository.saveMagicCard(this._listMagicCard);
+            res.status(201).json(this._listMagicCard)
         }catch(err){
             res.status(500).json({message: "Erro ao cadastrar " + err});
         }

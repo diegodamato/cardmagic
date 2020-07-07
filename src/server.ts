@@ -1,8 +1,20 @@
 import app from './app';
 import config from './config/config'
+import mongoDatabase from './database/mongoDatabase';
 
-const port: number = config.portServer;
+class Server{
+    private _port: number = config.portServer;
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-})
+    runServer = async() => {
+        try{
+            await mongoDatabase.connect();
+            app.listen(this._port, () => {
+                console.log(`Server running on port ${this._port}`);
+            })
+        }catch(err){
+            console.log("ERRO " + err);
+        }
+    }
+}
+
+new Server().runServer();

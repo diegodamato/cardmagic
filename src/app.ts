@@ -1,13 +1,17 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import router from './router/magicaCardRouter'
-import mongoDatabase from './database/mongoDatabase';
 
-const app: express.Application = express();
-mongoDatabase.connect();
+class App{
+    private _app: express.Application = express();
+    
+    start(){
+        this._app.use(bodyParser.json());
+        this._app.use(bodyParser.urlencoded({ extended: false }));
+        this._app.use(router);
+        return this._app;
+    }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(router);
+}
 
-export default app;
+export default new App().start();
