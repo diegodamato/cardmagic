@@ -1,12 +1,17 @@
 import { Request, Response } from 'express';
 import MagicService from './../service/magicService';
 import MagicCardEntity from './../entity/magicCardEntity'
-import magicCardRepository from './../repository/magicCardRepository';
+import MagicCardRepository from './../repository/magicCardRepository';
 
-class MagicCard {
-    private _magicService: MagicService = new MagicService();
+class MagicCardCtrl {
+    private _magicService: MagicService;
     private _listMagicCard: Array<MagicCardEntity>;
-    private _magicCardRepository = magicCardRepository
+    private _magicCardRepository: MagicCardRepository;
+
+    constructor(magicService: MagicService, magicCardRepository: MagicCardRepository){
+        this._magicService = magicService;
+        this._magicCardRepository = magicCardRepository;
+    }
 
     async saveCard(req: Request, res: Response) {
         let name: string = req.body.name;
@@ -35,8 +40,8 @@ class MagicCard {
         let id: string = req.params.id;
 
         try{
-            await this._magicCardRepository.deleteMagicCardById(id);
-            res.status(200).json({message: "Deletado com sucesso"});
+            const result = await this._magicCardRepository.deleteMagicCardById(id);
+            result.deletedCount ? res.status(200).json({message: "Deletado com sucesso"}) : res.status(404).json({});
         }catch(err){
             res.status(500).json({message: "Erro ao consultar " + err});
         }
@@ -44,4 +49,4 @@ class MagicCard {
     }
 }
 
-export default MagicCard;
+export default MagicCardCtrl;

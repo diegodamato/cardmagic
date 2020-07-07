@@ -3,8 +3,12 @@ import MagicCardEntity from './../entity/magicCardEntity'
 
 class MagicCardRepository{
     
-    private _magicCardModel = MagicCardModel;
+    private _magicCardModel: any;
     private _excludedFields = { _id: false, __v: false };
+
+    constructor(magicCardModel: any){
+        this._magicCardModel = magicCardModel;
+    }
 
     saveMagicCard(listMagicCard: Array<MagicCardEntity>){
         return new Promise((resolve, reject) =>{
@@ -34,4 +38,4 @@ class MagicCardRepository{
     }
 }
 
-export default new MagicCardRepository;
+export default MagicCardRepository;
