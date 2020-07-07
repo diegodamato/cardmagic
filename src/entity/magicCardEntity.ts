@@ -10,6 +10,19 @@ class MagicCardEntity{
         this._name = name;
         this._rarity = rarity;
     }
+
+    get id(): string{
+        return this._id;
+    }
+
+    get name(): string{
+        return this._name;
+    }
+
+    get rarity(): string{
+        return this._rarity;
+    }
+
 }
 
 export default MagicCardEntity;

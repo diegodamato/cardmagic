@@ -5,9 +5,7 @@ const router: Router = Router();
 const controller = new MagicCardCtrl()
 
 router.post('/', controller.saveCard.bind(controller));
-
-router.get('/', (req: Request, res: Response) => {
-    res.send('Hello World');
-});
+router.get('/:id', controller.findCard.bind(controller));
+router.delete('/:id', controller.deleteCard.bind(controller));
 
 export default router;
