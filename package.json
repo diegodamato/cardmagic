@@ -4,12 +4,14 @@
   "description": "Api de estudo de typescript",
   "main": "index.js",
   "scripts": {
-    "start": "npm run server",
+    "start": "concurrently 'npm run build' 'npm run server'",
     "dev": "concurrently 'npm run build:watch' 'npm run server:watch'",
     "server": "node dist/server.js",
     "server:watch": "nodemon dist/server.js",
     "build": "tsc",
-    "build:watch": "tsc -w"
+    "build:watch": "tsc -w",
+    "start-docker-dev": "docker-compose up app-dev",
+    "start-docker-prod": "docker-compose up app"
   },
   "repository": {
     "type": "git",

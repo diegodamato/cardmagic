@@ -5,9 +5,11 @@ services:
         restart: always
         build: .
         environment:
-            - MONGO_URI=mongodb://mongo/magicCard
             - PORT=3000
             - NODE_ENV=production
+            - MONGO_URI=mongodb://mongo/magicCard
+            - MONGO_TIMEOUT_SOCKET=30000
+            - MONGO_TIMEOUT_CONNECTION=30000
         ports:
             - "3000:3000"
         links:
@@ -15,29 +17,38 @@ services:
         depends_on:
             - mongo
         command: npm start
-
-    app-dev:
-        container_name: "app-dev"
-        restart: always
-        build: .
-        environment:
-            - MONGO_URI=mongodb://mongo/magicCard
-            - PORT=3001
-            - NODE_ENV=developer
-        ports:
-            - "3001:3001"
-            - "5555:5555"
-        links:
-            - mongo
-        depends_on:
-            - mongo
-        command: npm run dev
         volumes:
             - ./:/usr/src/app 
-
+                    
     mongo:
         container_name: "mongo"
         image: mongo
         ports:
             - "27017:27017"
-        # command: mongod --smallfiles --logpath=/dev/null # --quiet
+    
+    app-dev:
+        container_name: "app-dev"
+        restart: always
+        build: .
+        environment:
+            - PORT=3001
+            - NODE_ENV=developer
+            - MONGO_URI=mongodb://mongo-dev/magicCard
+            - MONGO_TIMEOUT_SOCKET=30000
+            - MONGO_TIMEOUT_CONNECTION=30000
+        ports:
+            - "3001:3001"
+        links:
+            - mongo-dev
+        depends_on:
+            - mongo-dev
+        command: npm run dev
+        volumes:
+            - ./:/usr/src/app 
+
+    mongo-dev:
+        container_name: "mongo-dev"
+        image: mongo
+        ports:
+            - "27017:27017"
+    
