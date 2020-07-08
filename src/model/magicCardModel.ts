@@ -17,9 +17,3 @@ const magicCardSchema: Schema = new Schema({
 });
 
 export default model("magicCard", magicCardSchema);
-    
-    
-
-
-
-
