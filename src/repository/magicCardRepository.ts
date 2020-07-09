@@ -29,6 +29,10 @@ class MagicCardRepository{
         });
     }
 
+    findAllMagicCard(){
+        return MagicCardModel.find({},this._excludedFields);
+    }
+
     findMagicCardById(id: string){
         return MagicCardModel.findOne({id}, this._excludedFields);
     }

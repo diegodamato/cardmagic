@@ -25,6 +25,15 @@ class MagicCardCtrl {
         }
     }
 
+    async findAllCard(req: Request, res: Response){
+        try{
+            const result = await this._magicCardRepository.findAllMagicCard();
+            result ? res.status(200).json(result) : res.status(404).json({});
+        }catch(err){
+            res.status(500).json({message: "Erro ao consultar " + err});
+        }
+    }
+
     async findCard(req: Request, res: Response){
         let id: string = req.params.id;
 
