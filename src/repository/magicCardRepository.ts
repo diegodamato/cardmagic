@@ -33,8 +33,8 @@ class MagicCardRepository{
         return MagicCardModel.find({},this._excludedFields);
     }
 
-    findMagicCardById(id: string){
-        return MagicCardModel.findOne({id}, this._excludedFields);
+    findMagicCardByName(name: string){
+        return MagicCardModel.findOne({name}, this._excludedFields);
     }
 
     deleteMagicCardById(id: string){

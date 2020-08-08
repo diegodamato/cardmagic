@@ -16,8 +16,18 @@ class MagicCardCtrl {
     async saveCard(req: Request, res: Response) {
         let name: string = req.body.name;
 
+        
         try {
+            if(!name){
+                res.status(400).json({message: "Nome é obrigatório"});
+                return;
+            }
             this._listMagicCard = await this._magicService.getMagicCard(name);
+            
+            if(!this._listMagicCard.length){
+                return res.status(404).json({message: "Card não existe"});
+            }
+            
             const result = await this._magicCardRepository.saveMagicCard(this._listMagicCard);
             res.status(201).json(this._listMagicCard)
         }catch(err){
@@ -35,11 +45,11 @@ class MagicCardCtrl {
     }
 
     async findCard(req: Request, res: Response){
-        let id: string = req.params.id;
+        let name: string = req.params.name;
 
         try{
-            const result = await this._magicCardRepository.findMagicCardById(id);
-            result ? res.status(200).json(result) : res.status(404).json({});
+            const result = await this._magicCardRepository.findMagicCardByName(name);
+            result ? res.status(200).json([result]) : res.status(404).json({});
         }catch(err){
             res.status(500).json({message: "Erro ao consultar " + err});
         }
@@ -47,7 +57,6 @@ class MagicCardCtrl {
 
     async deleteCard(req: Request, res: Response){
         let id: string = req.params.id;
-
         try{
             const result = await this._magicCardRepository.deleteMagicCardById(id);
             result.deletedCount ? res.status(200).json({message: "Deletado com sucesso"}) : res.status(404).json({});
